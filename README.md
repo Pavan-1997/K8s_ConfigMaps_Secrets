@@ -72,15 +72,15 @@ env | grep DB
 - Map the Configmap file name that was created earlier to it 
 - Specify the key of the variable as created in the Configmap
 
-The above changes are implemented in deployemnt_cm.yml file 
+    The above changes are implemented in deployemnt_cm.yml file 
 
 
 9. Now login to Pod and check for enivorment variable DB
 
-Follow Step 6. , 7.
-
-You should be seeing the DB port mapped 
-
+    Follow Step 6. , 7.
+    
+    You should be seeing the DB port mapped 
+    
 
 10. Once this is mapped, Now the developer inside his Java/Python application he can just say as below and retreive the value for his DB connection
 ```
@@ -89,18 +89,18 @@ os.env("DB-PORT")
 
 11. Considering a scenario, If Admin wants to change the DB-PORT in the deployemnt manifest file but doing this doesn't change the port in the Pod and app still uses the old DB port untill and unless the changed deployment is applied on the cluster which can lead to prod issues.
 
-To solve this problem: 
+    To solve this problem: 
 
-We can use VolumeMounts, where the variables are stored in a file rather than passing in enivorment, which are attached to the Pods  
+    We can use VolumeMounts, where the variables are stored in a file rather than passing in enivorment, which are attached to the Pods  
 
-Modifying the deployemnt manifest file by adding tasks 
+    Modifying the deployemnt manifest file by adding tasks 
 
 - Create a volume
 - Map the Configmap file name that was created earlier to it
 - Mount the volume
 - Give the mount path 
 
-The above changes are implemented in deployemnt_cm_vol.yml file 
+    The above changes are implemented in deployemnt_cm_vol.yml file 
 
 
 12. Now login to Pod and check and view the file 
@@ -115,35 +115,35 @@ cat db-port | more
 
 13. Now change the port number in the Configmap and apply the manifest file to the cluster 
 
-Now login back to the pod and view the port in the file which should now have the updated port number, this is how we can solve the problem in Step 11.
+    Now login back to the pod and view the port in the file which should now have the updated port number, this is how we can solve the problem in Step 11.
 
 
 14. Now creating secrets, secrets are of different types like generic, tls etc
 
-Now create a secret, this is another way of creating the Configmap/Secret in a single line
-
+    Now create a secret, this is another way of creating the Configmap/Secret in a single line
+```
 kubectl create secret generic sample-python-app-secret --from-literal=db-port="3306"
-
+```
 
 15. To check inside the secret created 
 ```
 kubectl describe secret sample-python-app-secret
 ```
-As you see the value for the db-port in base64 encryption
+    As you see the value for the db-port in base64 encryption
 
-The encryption can also be seen by using the below 
+    The encryption can also be seen by using the below 
 ```
 kubectl edit secret sample-python-app-secret
 ```
-Now to just convert the base64 value use below
+    Now to just convert the base64 value use below
 ```
 echo <encrypted-text> | base64 --decode | more
 ```
-By defauld K8s doesnt provide a good encryption, hence we can use custom encryption from Hashicorp Vault, Seal Secrets at namespace level or during K8s secret creation at the rest we have pass it to API server using the etcd
+    By defauld K8s doesnt provide a good encryption, hence we can use custom encryption from Hashicorp Vault, Seal Secrets at namespace level or during K8s secret creation at the rest we have pass it to API server using the etcd
 
 
 15. Doing the Step 11. , 12. by replacing Configmap with secret
 
-The above changes are implemented in deployemnt_sec_vol.yml file 
-
-Apply the above deployment file and follow the above steps as did for Configmap volumes and check the db_port value inside the Pod
+    The above changes are implemented in deployemnt_sec_vol.yml file 
+    
+    Apply the above deployment file and follow the above steps as did for Configmap volumes and check the db_port value inside the Pod
