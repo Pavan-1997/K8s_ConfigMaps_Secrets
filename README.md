@@ -2,7 +2,7 @@
 
 As a comprehensive container orchestration platform, Kubernetes offers a fully-featured platform to support all your application needs from container lifecycle management to networking services, etc. Managing application configurations and sensitive data such as passwords is a core consideration in almost any software development. Kubernetes uses ConfigMaps and Secrets to facilitate this need in containerized application development.
 
-ConffigMaps:
+ConfigMaps:
 
 The main purpose of using a ConfigMap is to decouple the application configuration data from the application itself. This separation improves the reusability of the container as a decoupled architecture enables developers to use and test containerized applications under different configurations. However, ConfigMaps are not designed to handle large amounts of data and are capped at 1MB. Developers need to look for other solutions such as volumes or external data sources if configuration data exceeds that limit. Thus, ConfigMaps are ideal for implementing non-sensitive configuration data less than 1MB in total size.
 
@@ -30,39 +30,40 @@ TASK 3: Creating Secrets and Volume on  Minikube and using as Volumemounts file 
 
 1. Create the Kubernetes cluster using Minikube 
 
-Follow the Minikube Instructions in OneNote 
+    Follow the Minikube Instructions in OneNote 
 
 
 2. Clone the repo for manifest files
 
 
 3. Now deploy the configmap manifest file in the repo 
-
+```
 kubectl apply -f configmap.yml
-
+```
 
 4. To check the configmap created 
-
+```
 kubectl get cm
-
+```
 
 5. To check inside the configmap created 
-
+```
 kubectl describe cm sample-python-app-configmap
-
+```
 
 6. Now login to anyone of pod, we are doing these to view the enivorment variable of the pod
-
+```
 kubectl get pods
-
+```
+```
 kubectl exec -it <pod-name> -- /bin/bash
-
+```
 
 7. Now search for enviroment variable db inside the pod
-
+```
 env | grep DB
-
-This will show no env variable as of now
+```
+  This will show no env variable as of now
 
 
 8. Modifying the deployemnt manifest file by adding tasks 
@@ -82,9 +83,9 @@ You should be seeing the DB port mapped
 
 
 10. Once this is mapped, Now the developer inside his Java/Python application he can just say as below and retreive the value for his DB connection
-
+```
 os.env("DB-PORT") 
-
+```
 
 11. Considering a scenario, If Admin wants to change the DB-PORT in the deployemnt manifest file but doing this doesn't change the port in the Pod and app still uses the old DB port untill and unless the changed deployment is applied on the cluster which can lead to prod issues.
 
@@ -105,11 +106,12 @@ The above changes are implemented in deployemnt_cm_vol.yml file
 12. Now login to Pod and check and view the file 
 
 Follow Step 6. 
-
+```
 cd /opt
-
+```
+```
 cat db-port | more
-
+```
 
 13. Now change the port number in the Configmap and apply the manifest file to the cluster 
 
@@ -124,19 +126,19 @@ kubectl create secret generic sample-python-app-secret --from-literal=db-port="3
 
 
 15. To check inside the secret created 
-
+```
 kubectl describe secret sample-python-app-secret
-
+```
 As you see the value for the db-port in base64 encryption
 
 The encryption can also be seen by using the below 
-
+```
 kubectl edit secret sample-python-app-secret
-
+```
 Now to just convert the base64 value use below
-
+```
 echo <encrypted-text> | base64 --decode | more
-
+```
 By defauld K8s doesnt provide a good encryption, hence we can use custom encryption from Hashicorp Vault, Seal Secrets at namespace level or during K8s secret creation at the rest we have pass it to API server using the etcd
 
 
