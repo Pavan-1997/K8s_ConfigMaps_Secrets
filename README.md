@@ -129,13 +129,13 @@ kubectl create secret generic sample-python-app-secret --from-literal=db-port="3
 ```
 kubectl describe secret sample-python-app-secret
 ```
-    As you see the value for the db-port in base64 encryption
+   As you see the value for the db-port in base64 encryption
 
-    The encryption can also be seen by using the below 
+   The encryption can also be seen by using the below 
 ```
 kubectl edit secret sample-python-app-secret
 ```
-    Now to just convert the base64 value use below
+   Now to just convert the base64 value use below
 ```
 echo <encrypted-text> | base64 --decode | more
 ```
