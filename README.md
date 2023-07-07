@@ -84,8 +84,8 @@ env | grep DB
     Follow Step 6. , 7.
     
     You should be seeing the DB port mapped
-   
-    ![image](https://github.com/Pavan-1997/K8s_ConfigMaps_Secrets/assets/32020205/27ee85f9-98d0-4351-9834-d3b2ef0b0eaa)
+
+![image](https://github.com/Pavan-1997/K8s_ConfigMaps_Secrets/assets/32020205/27ee85f9-98d0-4351-9834-d3b2ef0b0eaa)
 
 
 11. Once this is mapped, Now the developer inside his Java/Python application he can just say as below and retreive the value for his DB connection
@@ -160,5 +160,5 @@ echo <encrypted-text> | base64 --decode | more
     
     Apply the above deployment file and follow the above steps as did for Configmap volumes and check the db_port value inside the Pod
 
-    ![image](https://github.com/Pavan-1997/K8s_ConfigMaps_Secrets/assets/32020205/00b8d9e3-1f93-4d3d-9f34-2357042495fb)
+![image](https://github.com/Pavan-1997/K8s_ConfigMaps_Secrets/assets/32020205/00b8d9e3-1f93-4d3d-9f34-2357042495fb)
 
