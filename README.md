@@ -1,4 +1,4 @@
-# K8s ConfigMaps and Secrets   
+# K8s ConfigMaps and Secrets    
              
 As a comprehensive container orchestration platform, Kubernetes offers a fully-featured platform to support all your application needs from container lifecycle management to networking services, etc. Managing application configurations and sensitive data such as passwords is a core consideration in almost any software development. Kubernetes uses ConfigMaps and Secrets to facilitate this need in containerized application development.
   
